@@ -127,10 +127,12 @@ open class DTPhotoAnimator: NSObject, DTPhotoViewerBaseAnimator {
             }
             
             photoViewerController.imageView.backgroundColor = .clear
-            
+            let presentedFrame = transitionContext.finalFrame(for: photoViewerController)
+            let dismissedFrame = CGRect(x: presentedFrame.minX, y: transitionContext.containerView.bounds.height, width: presentedFrame.width, height: presentedFrame.height)
+
             let animation = {
                 photoViewerController.dismissingAnimation()
-                
+                photoViewerController.view.frame = dismissedFrame
                 if let referencedView = photoViewerController.referencedView {
                     photoViewerController.imageView.layer.cornerRadius = referencedView.layer.cornerRadius
                     photoViewerController.imageView.backgroundColor = referencedView.backgroundColor
